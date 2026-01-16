@@ -253,10 +253,6 @@ export class Emulator {
   async saveSRAM() {
     this.fs.unlink(this.sramFilePath)
     this.callCommand('_cmd_savefiles')
-    if (!this.hasSRAM()) {
-      console.warn('[NOSTALGIST] no SRAM found')
-      return null
-    }
     const buffer = await this.fs.waitForFile(this.sramFilePath)
     const blob = new Blob([buffer], { type: 'application/octet-stream' })
     return blob
@@ -381,20 +377,6 @@ export class Emulator {
     const dateString = `${year}${month}${day}-${hour}${minute}${second}`
     const baseName = this.romBaseName
     return `${baseName}-${dateString}.png`
-  }
-
-  //in worst cases we want to assume there is a save file so we can try to save it
-  private hasSRAM(): boolean {
-    const path = this.sramFileDirectory
-    console.warn('[NOSTALGIST] checking sram path', path)
-    try {
-      const files = this.fs.readdir(path)
-      console.warn('[NOSTALGIST] found save files', files)
-      const result = files.filter((name: string) => name !== '.' && name !== '..')
-      return result.length > 0
-    } catch {
-      return true
-    }
   }
 
   private keyboardDown(code: string) {
