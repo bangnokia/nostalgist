@@ -57,28 +57,28 @@
     "@types/path-browserify": "1.0.3"
   },
   "devDependencies": {
-    "@arianrhodsandlot/eslint-config": "0.25.3",
-    "@arianrhodsandlot/release-kit": "0.1.12",
-    "@astrojs/starlight": "0.37.1",
-    "@happy-dom/global-registrator": "20.0.11",
+    "@arianrhodsandlot/eslint-config": "0.25.4",
+    "@arianrhodsandlot/release-kit": "0.2.0",
+    "@astrojs/starlight": "0.37.3",
+    "@happy-dom/global-registrator": "20.3.1",
     "@playwright/test": "1.57.0",
     "@tsconfig/recommended": "1.0.13",
     "@types/is-ci": "3.0.4",
-    "@types/node": "25.0.3",
+    "@types/node": "25.0.9",
     "@types/wicg-file-system-access": "2023.10.7",
-    "@zip.js/zip.js": "2.8.11",
-    "astro": "5.16.6",
+    "@zip.js/zip.js": "2.8.15",
+    "astro": "5.16.9",
     "eslint": "9.39.2",
     "ini": "6.0.0",
     "jiti": "2.6.1",
     "lint-staged": "16.2.7",
     "path-browserify": "1.0.1",
-    "prettier": "3.7.4",
+    "prettier": "3.8.0",
     "simple-git-hooks": "2.13.1",
     "typescript": "5.9.3",
-    "vite": "7.3.0"
+    "vite": "7.3.1"
   },
-  "packageManager": "pnpm@10.26.0",
+  "packageManager": "pnpm@10.28.0",
   "engines": {
     "node": ">=24.7.0"
   },
