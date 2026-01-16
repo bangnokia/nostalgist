@@ -253,7 +253,7 @@ export class Emulator {
   async saveSRAM() {
     this.fs.unlink(this.sramFilePath)
     this.callCommand('_cmd_savefiles')
-    if (!this.hasSRAM) {
+    if (!this.hasSRAM()) {
       return null
     }
     const buffer = await this.fs.waitForFile(this.sramFilePath)
@@ -382,6 +382,7 @@ export class Emulator {
     return `${baseName}-${dateString}.png`
   }
 
+  //in worst cases we want to assume there is a save file so we can try to save it
   private hasSRAM(): boolean {
     const path = this.sramFileDirectory
     try {
