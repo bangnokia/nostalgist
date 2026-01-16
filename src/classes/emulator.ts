@@ -254,6 +254,7 @@ export class Emulator {
     this.fs.unlink(this.sramFilePath)
     this.callCommand('_cmd_savefiles')
     if (!this.hasSRAM()) {
+      console.warn('[NOSTALGIST] no SRAM found')
       return null
     }
     const buffer = await this.fs.waitForFile(this.sramFilePath)
@@ -385,8 +386,10 @@ export class Emulator {
   //in worst cases we want to assume there is a save file so we can try to save it
   private hasSRAM(): boolean {
     const path = this.sramFileDirectory
+    console.warn('[NOSTALGIST] checking sram path', path)
     try {
       const files = this.fs.readdir(path)
+      console.warn('[NOSTALGIST] found save files', files)
       const result = files.filter((name: string) => name !== '.' && name !== '..')
       return result.length > 0
     } catch {
