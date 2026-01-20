@@ -16,6 +16,17 @@
   </a>
 </p>
 
+<table align="center">
+  <tr>
+    <td valign="middle">
+      <img align="middle" src="https://github.githubassets.com/assets/mona-e50f14d05e4b.png" alt="mona" width="28" height="28" />
+    </td>
+    <td valign="middle">
+      <a href="https://github.com/sponsors/arianrhodsandlot">Become a sponsor</a>
+    </td>
+  </tr>
+</table>
+
 Nostalgist.js is a JavaScript library that allows you to run emulators of retro consoles, like NES and Sega Genesis, within web browsers.
 
 >  [!tip]
@@ -97,38 +108,16 @@ Please refer to [nostalgist.js.org/apis](https://nostalgist.js.org/apis).
 > [!note]
 > Feel free to add yours by sending a pull request.
 
-+ [RetroAssembly](https://github.com/arianrhodsandlot/retroassembly)
-
-  A personal retro game collection cabinet in your browser.
-
-+ [vme](https://github.com/gitGalu/vme)
-
-  Virtual Machine / Emulator - multi emulator web app
-
-+ [ultimate-homebrew-extensions](https://github.com/longjoel/ultimate-homebrew-extensions)
-
-  Runs an emulator to test ROMs inside of VS Code
-
-+ [NextCloud Nostalgist](https://github.com/RobLoach/nextcloud-nostalgist)
-
-  Run emulators of retro consoles directly in NextCloud via Nostalgist.js.
-
-+ [Nostalbit](https://github.com/iDarkSSJ/Nostalbit)
-
-  A retro web emulator with Next.js, Tailwind, TypeScript
-
-+ [AstroEmu](https://github.com/syed-sakeeb-ahmed/AstroEmu)
-
-  Famicom and Super Famicom on the web
-
-+ [Koin.js](https://koin.js.org)
-
-  The high-performance, preservation-focused netflix style emulation engine powered by Nostalgist.
-
-+ [Foxol](https://play.foxol.app)
-
-  Foxol is a modern emulator platform with multiplayer, cloud saves, cheats, and deep customization across every device.
-
+| Project | Description |
+| ------- | ----------- |
+| [RetroAssembly](https://github.com/arianrhodsandlot/retroassembly) | The personal retro game collection cabinet in your browser. |
+| [vme](https://github.com/gitGalu/vme) | Virtual Machine / Emulator - multi emulator web app |
+| [ultimate-homebrew-extensions](https://github.com/longjoel/ultimate-homebrew-extensions) | Runs an emulator to test ROMs inside of VS Code |
+| [NextCloud Nostalgist](https://github.com/RobLoach/nextcloud-nostalgist) | Run emulators of retro consoles directly in NextCloud via Nostalgist.js. |
+| [Nostalbit](https://github.com/iDarkSSJ/Nostalbit) | A retro web emulator with Next.js, Tailwind, TypeScript |
+| [AstroEmu](https://github.com/syed-sakeeb-ahmed/AstroEmu) | Famicom and Super Famicom on the web |
+| [Koin.js](https://koin.js.org) | The high-performance, preservation-focused netflix style emulation engine powered by Nostalgist. |
+| [Foxol](https://play.foxol.app) | Foxol is a modern emulator platform with multiplayer, cloud saves, cheats, and deep customization across every device. |
 
 ### Credits
 
@@ -150,7 +139,6 @@ Please refer to [nostalgist.js.org/apis](https://nostalgist.js.org/apis).
   It's more powerful and more sophisticated. It includes many custom cores and has a friendly user interface. It can be used inside mobile browsers with touch support.
 
   It's not that friendly towards modern frontend development.
-
 
 ## Caveat
 > [!caution]
