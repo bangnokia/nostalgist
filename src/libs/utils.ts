@@ -79,6 +79,7 @@ function isEsmScript(js: string) {
 
 async function patchCoreJs({ js, name }: { js: ResolvableFile; name: string }) {
   let jsContent = await js.getText()
+  name = name.replaceAll('-', '_')
 
   if (isGlobalScript(jsContent)) {
     jsContent = `export function getEmscripten({ Module }) {
