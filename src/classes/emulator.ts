@@ -501,13 +501,10 @@ export class Emulator {
       ...emscriptenModule,
 
       locateFile: (url: string, scriptDirectory: string) => {
-        if (this.blobUrlJs !== undefined && url.replaceAll('-', '_') === `${name.replaceAll('-', '_')}_libretro.js`) {
+        if (this.blobUrlJs !== undefined && url === `${name}_libretro.js`) {
           return this.blobUrlJs
         }
-        if (
-          this.blobUrlWasm !== undefined &&
-          url.replaceAll('-', '_') === `${name.replaceAll('-', '_')}_libretro.wasm`
-        ) {
+        if (this.blobUrlWasm !== undefined && url === `${name}_libretro.wasm`) {
           return this.blobUrlWasm
         }
         if (typeof locateFile === 'function') {
