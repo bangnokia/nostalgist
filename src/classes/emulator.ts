@@ -518,7 +518,7 @@ export class Emulator {
     }
     const initialModule = getEmscriptenModuleOverrides(moduleOptions)
     initialModule.preRun?.push(() => {
-      if (typeof initialModule.FS === 'function') {
+      if (typeof initialModule.FS.init === 'function') {
         initialModule.FS.init(() => this.stdin())
       }
     })
