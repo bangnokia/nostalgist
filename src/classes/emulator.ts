@@ -45,6 +45,9 @@ interface EmulatorEmscripten {
 }
 
 export class Emulator {
+  private blobUrlJs: string | undefined
+  private blobUrlWasm: string | undefined
+
   private canvasInitialSize = { height: 0, width: 0 }
   private emscripten: EmulatorEmscripten | undefined
   private eventListeners: Record<EmulatorEvent, ((...args: unknown[]) => unknown)[]> = {
@@ -122,6 +125,14 @@ export class Emulator {
     } catch {}
     JSEvents.removeAllEventListeners()
     this.removeGlobalDOMEventListeners()
+    if (this.blobUrlWasm !== undefined) {
+      URL.revokeObjectURL(this.blobUrlWasm)
+      this.blobUrlWasm = undefined
+    }
+    if (this.blobUrlJs !== undefined) {
+      URL.revokeObjectURL(this.blobUrlJs)
+      this.blobUrlJs = undefined
+    }
     uninstallSetImmediatePolyfill()
     this.gameStatus = 'terminated'
   }
@@ -464,10 +475,50 @@ export class Emulator {
 
   private async setupEmscripten() {
     const { core, element, emscriptenModule } = this.options
-    const { wasm } = core
-    const moduleOptions = { canvas: element, preRun: [], wasmBinary: await wasm.getArrayBuffer(), ...emscriptenModule }
+    const { js, name, wasm } = core
+    const { locateFile } = emscriptenModule
+    const blobJs = (() => {
+      try {
+        return js.getBlob()
+      } catch {}
+    })()
+    const blobWasm = (() => {
+      try {
+        return wasm.getBlob()
+      } catch {}
+    })()
+    if (blobJs !== undefined && this.blobUrlJs === undefined) {
+      this.blobUrlJs = URL.createObjectURL(blobJs)
+    }
+    if (blobWasm !== undefined && this.blobUrlWasm === undefined) {
+      this.blobUrlWasm = URL.createObjectURL(blobWasm)
+    }
+    const moduleOptions = {
+      canvas: element,
+      preRun: [],
+      wasmBinary: await wasm.getArrayBuffer(),
+      ...(blobJs === undefined ? {} : { mainScriptUrlOrBlob: blobJs }),
+      ...emscriptenModule,
+
+      locateFile: (url: string, scriptDirectory: string) => {
+        if (this.blobUrlJs !== undefined && url === `${name}_libretro.js`) {
+          return this.blobUrlJs
+        }
+        if (this.blobUrlWasm !== undefined && url === `${name}_libretro.wasm`) {
+          return this.blobUrlWasm
+        }
+        if (typeof locateFile === 'function') {
+          return locateFile(url, scriptDirectory)
+        }
+        return scriptDirectory + url
+      },
+    }
     const initialModule = getEmscriptenModuleOverrides(moduleOptions)
-    initialModule.preRun?.push(() => initialModule.FS.init(() => this.stdin()))
+    initialModule.preRun?.push(() => {
+      if (typeof initialModule.FS.init === 'function') {
+        initialModule.FS.init(() => this.stdin())
+      }
+    })
 
     const { getEmscripten } = await importCoreJsAsESM(core)
     checkIsAborted(this.options.signal)
