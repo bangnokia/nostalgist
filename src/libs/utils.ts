@@ -96,16 +96,28 @@ async function patchCoreJs({ js, name }: { js: ResolvableFile; name: string }) {
          }
       }`
   } else if (isEsmScript(jsContent)) {
-    jsContent = `${jsContent.replace('var setImmediate', '').replace(
-      'readyPromiseResolve(Module)',
-      `readyPromiseResolve({
-        AL: typeof AL === 'undefined' ? null: AL,
-        Browser: typeof Browser === 'undefined' ? null: Browser,
-        JSEvents,
-        Module,
-        exit: _emscripten_force_exit
-      })`,
-    )};
+    jsContent = `${jsContent
+      .replace('var setImmediate', '')
+      .replace(
+        'readyPromiseResolve(Module)',
+        `readyPromiseResolve({
+          AL: typeof AL === 'undefined' ? null: AL,
+          Browser: typeof Browser === 'undefined' ? null: Browser,
+          JSEvents,
+          Module,
+          exit: _emscripten_force_exit
+        })`,
+      )
+      .replace(
+        'return moduleRtn;',
+        `return moduleRtn.then((Module) => ({
+          AL: typeof AL === 'undefined' ? null: AL,
+          Browser: typeof Browser === 'undefined' ? null: Browser,
+          JSEvents,
+          exit: _emscripten_force_exit,
+          ...Module,
+        }));`,
+      )};
     export function getEmscripten({ Module }) {
       const fnA = (typeof libretro_${name} === "function") ? libretro_${name} : null;
       const fnB = (typeof ${name} === "function") ? ${name} : null;

@@ -245,7 +245,16 @@ export class Emulator {
   resize({ height, width }: { height: number; width: number }) {
     const { Module } = this.getEmscripten()
     if (typeof width === 'number' && typeof height === 'number') {
-      Module.setCanvasSize(width, height)
+      try {
+        Module.setCanvasSize(width, height)
+      } catch (error) {
+        if (error instanceof DOMException) {
+          Module.canvas.setAttribute('width', width.toString())
+          Module.canvas.setAttribute('height', height.toString())
+        } else {
+          throw error
+        }
+      }
     }
   }
 
