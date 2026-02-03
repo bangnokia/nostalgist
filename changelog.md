@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.20.2] - 2026-02-03
+### Fixed
+- Threaded core fixes
+
 ## [0.20.1] - 2026-02-03
 ### Fixed
 - Fix some issues when launching threaded cores
@@ -215,7 +219,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - fix core loading ([9790327](https://github.com/arianrhodsandlot/nostalgist/commit/97903270c39788b3d05b7f7d0700ccdf32503a9e))
 
-[Unreleased]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.20.1...HEAD
+[Unreleased]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.20.2...HEAD
+[0.20.0]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.20.1...v0.20.2
 [0.20.0]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.20.0...v0.20.1
 [0.20.0]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.19.2...v0.20.0
 [0.19.2]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.19.1...v0.19.2

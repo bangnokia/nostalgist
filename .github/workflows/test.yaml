@@ -1,7 +1,7 @@
 name: test
 on:
   push:
-    branches: main
+    branches: [main]
     paths-ignore:
       - '**/*.md'
       - '**/*.mdx'
@@ -9,7 +9,7 @@ on:
     tags-ignore:
       - '*'
   pull_request:
-    branches: main
+    branches: [main]
     paths-ignore:
       - '**/*.md'
       - '**/*.mdx'
