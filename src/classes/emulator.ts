@@ -58,6 +58,7 @@ export class Emulator {
   private gameStatus: GameStatus = 'initial'
   private globalDOMEventListeners = new Map<EventTarget, Record<string, EventListenerOrEventListenerObject>>()
   private messageQueue: [Uint8Array, number][] = []
+  private cachedKeyboardCodes: Map<string, string> | null = null
 
   private options: EmulatorOptions
 
@@ -122,7 +123,7 @@ export class Emulator {
     const { exit, JSEvents } = this.getEmscripten()
     try {
       exit(statusCode)
-    } catch {}
+    } catch { }
     JSEvents.removeAllEventListeners()
     this.removeGlobalDOMEventListeners()
     if (this.blobUrlWasm !== undefined) {
@@ -336,7 +337,7 @@ export class Emulator {
     try {
       this.fs.unlink(this.stateFilePath)
       this.fs.unlink(this.stateThumbnailFilePath)
-    } catch {}
+    } catch { }
   }
 
   private fireKeyboardEvent(type: 'keydown' | 'keyup', code: string) {
@@ -345,7 +346,7 @@ export class Emulator {
       if (eventTypeString === type) {
         try {
           eventListenerFunc({ code, target: this.options.element })
-        } catch {}
+        } catch { }
       }
     }
   }
@@ -361,9 +362,18 @@ export class Emulator {
   }
 
   private getKeyboardCode(button: string, player = 1) {
-    const config = this.getCurrentRetroarchConfig()
+    // Cache keyboard codes on first use to avoid repeated INI parsing
+    if (!this.cachedKeyboardCodes) {
+      const config = this.getCurrentRetroarchConfig()
+      this.cachedKeyboardCodes = new Map()
+      for (const configKey in config) {
+        if (configKey.startsWith('input_player')) {
+          this.cachedKeyboardCodes.set(configKey, config[configKey])
+        }
+      }
+    }
     const configName = `input_player${player}_${button}`
-    const key: string = config[configName]
+    const key = this.cachedKeyboardCodes.get(configName)
     if (!key || key === 'nul') {
       return
     }
@@ -489,12 +499,12 @@ export class Emulator {
     const blobJs = (() => {
       try {
         return js.getBlob()
-      } catch {}
+      } catch { }
     })()
     const blobWasm = (() => {
       try {
         return wasm.getBlob()
-      } catch {}
+      } catch { }
     })()
     if (blobJs !== undefined && this.blobUrlJs === undefined) {
       this.blobUrlJs = URL.createObjectURL(blobJs)
