@@ -48,6 +48,7 @@ export class Emulator {
   private blobUrlJs: string | undefined
   private blobUrlWasm: string | undefined
 
+  private cachedKeyboardCodes: Map<string, string> | null = null
   private canvasInitialSize = { height: 0, width: 0 }
   private emscripten: EmulatorEmscripten | undefined
   private eventListeners: Record<EmulatorEvent, ((...args: unknown[]) => unknown)[]> = {
@@ -57,7 +58,7 @@ export class Emulator {
   private fileSystem: EmulatorFileSystem | undefined
   private gameStatus: GameStatus = 'initial'
   private globalDOMEventListeners = new Map<EventTarget, Record<string, EventListenerOrEventListenerObject>>()
-  private cachedKeyboardCodes: Map<string, string> | null = null
+
   private messageQueue: [Uint8Array, number][] = []
 
   private options: EmulatorOptions
