@@ -48,6 +48,8 @@ export class Emulator {
   private blobUrlJs: string | undefined
   private blobUrlWasm: string | undefined
 
+  private cachedKeyboardCodes: Map<string, string> | null = null
+  private cachedRetroarchConfigMtime = 0
   private canvasInitialSize = { height: 0, width: 0 }
   private emscripten: EmulatorEmscripten | undefined
   private eventListeners: Record<EmulatorEvent, ((...args: unknown[]) => unknown)[]> = {
@@ -57,6 +59,7 @@ export class Emulator {
   private fileSystem: EmulatorFileSystem | undefined
   private gameStatus: GameStatus = 'initial'
   private globalDOMEventListeners = new Map<EventTarget, Record<string, EventListenerOrEventListenerObject>>()
+
   private messageQueue: [Uint8Array, number][] = []
 
   private options: EmulatorOptions
@@ -361,9 +364,25 @@ export class Emulator {
   }
 
   private getKeyboardCode(button: string, player = 1) {
-    const config = this.getCurrentRetroarchConfig()
+    // Check config file stats to see if it changed
+    const stats = this.fs.stat(EmulatorFileSystem.configPath)
+    const currentMtime = stats ? stats.mtime.getTime() : 0
+
+    // Reload cache if mtime changed or cache doesn't exist
+    if (!this.cachedKeyboardCodes || currentMtime > this.cachedRetroarchConfigMtime) {
+      const config = this.getCurrentRetroarchConfig()
+      this.cachedKeyboardCodes = new Map()
+      this.cachedRetroarchConfigMtime = currentMtime
+
+      for (const configKey in config) {
+        if (configKey.startsWith('input_player')) {
+          this.cachedKeyboardCodes.set(configKey, config[configKey])
+        }
+      }
+    }
+
     const configName = `input_player${player}_${button}`
-    const key: string = config[configName]
+    const key = this.cachedKeyboardCodes.get(configName)
     if (!key || key === 'nul') {
       return
     }
