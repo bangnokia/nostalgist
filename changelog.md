@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.21.0] - 2026-02-12
+### Added
+- Reload keyboard code cache when the Retroarch config file's modification time changes
+
 ## [0.20.2] - 2026-02-03
 ### Fixed
 - Threaded core fixes
@@ -219,7 +223,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - fix core loading ([9790327](https://github.com/arianrhodsandlot/nostalgist/commit/97903270c39788b3d05b7f7d0700ccdf32503a9e))
 
-[Unreleased]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.20.2...HEAD
+[Unreleased]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.21.0...HEAD
 [0.20.0]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.20.1...v0.20.2
 [0.20.0]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.20.0...v0.20.1
 [0.20.0]: https://github.com/arianrhodsandlot/eslint-config/compare/v0.19.2...v0.20.0
